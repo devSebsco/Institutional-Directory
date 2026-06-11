@@ -1,0 +1,831 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Directorio Institucional — UPC Seccional Aguachica', description = 'Directorio de la Universidad Popular del Cesar – Seccional Aguachica. Contactos, dependencias, identidad institucional y datos de interés.' } = Astro.props;
+const image = '/assets/imagenes/galeria-1.avif';
+const url = 'https://directorio-upc-aguachica.vercel.app';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content={description}>
+  <title>{title}</title>
+
+  <link rel="canonical" href={url}>
+
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={image}>
+  <meta property="og:url" content={url}>
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://cdn.botpress.cloud">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://files.bpcontent.cloud">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <script is:inline src="https://cdn.tailwindcss.com"></script>
+  <script is:inline>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','system-ui','sans-serif'] },
+          colors: {
+            upc: {
+              50:'#f0fdf4', 100:'#dcfce7', 200:'#bbf7d0', 300:'#86efac',
+              400:'#4ade80', 500:'#22c55e', 600:'#16a34a', 700:'#15803d',
+              800:'#007A33', 900:'#005222', 950:'#003D19'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script is:inline src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" defer></script>
+  <script is:inline src="https://files.bpcontent.cloud/2026/05/03/00/20260503003920-MSLC8WM2.js" defer></script>
+</head>
+<body class="font-sans text-gray-800 bg-[#f8faf9]">
+  <slot />
+
+<style is:global>
+  pre { margin: 0 auto; }
+
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  *, *::before, *::after { cursor: url('/assets/imagenes/cursor-upc.webp') 16 16, auto; }
+  button, a, [role="button"], input, select, textarea, .dock-item, .dir-filter-btn { cursor: pointer !important; }
+
+  html, body { overflow: hidden; height: 100%; width: 100%; }
+
+  * { scrollbar-width: thin; scrollbar-color: #16a34a transparent; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; border: none; }
+  ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 999px; }
+  ::-webkit-scrollbar-button { display: none; }
+  #panel-escudo::-webkit-scrollbar,
+  #panel-bandera::-webkit-scrollbar,
+  #panel-himno::-webkit-scrollbar,
+  #panel-logo::-webkit-scrollbar,
+  #panel-colores::-webkit-scrollbar { width: 4px; }
+  #identidad-scroll::-webkit-scrollbar { width: 5px; }
+  #podcast-content::-webkit-scrollbar { width: 4px; }
+  #podcast-content::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 10px; }
+
+  #sections-container {
+    display: flex;
+    width: 600vw;
+    height: 100vh;
+    transition: transform .7s cubic-bezier(.77, 0, .175, 1);
+    will-change: transform;
+  }
+  #sections-container > section {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scrollbar-color: #16a34a transparent;
+    scrollbar-width: thin;
+  }
+  #sections-container > section::-webkit-scrollbar-track { background: transparent !important; border: none !important; }
+  #sections-container > section::-webkit-scrollbar-thumb { background: #16a34a !important; border-radius: 999px !important; }
+  #hero, #directorio, #video, #podcast, #ubicacion { overflow-y: hidden; }
+
+  .hero-bg { position: sticky; overflow: hidden; }
+  #sections-container > #hero { overflow: hidden; scrollbar-width: none; -ms-overflow-style: none; }
+  #hero::-webkit-scrollbar { display: none; }
+  .hero-waves { position: absolute; bottom: -2px; left: 0; width: 100%; z-index: 2; }
+  .hero-pattern-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(34,197,94,.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, rgba(255,255,255,.08) 0%, transparent 40%);
+  }
+  .orb { position: absolute; border-radius: 50%; z-index: 1; filter: blur(40px); }
+
+  @keyframes float    { 0%,100% { transform: translateY(0); }    50% { transform: translateY(-20px); } }
+  @keyframes fadeUp   { 0% { opacity: 0; transform: translateY(40px); } 100% { opacity: 1; transform: translateY(0); } }
+  @keyframes parpadeo { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+  @keyframes swipeHintPulse {
+    0%,100% { transform: translateY(-50%) translateX(0);  opacity: 0.9; }
+    50%     { transform: translateY(-50%) translateX(5px); opacity: 0.5; }
+  }
+
+  .animate-float          { animation: float 6s ease-in-out infinite; }
+  .animate-float-delayed  { animation: float 6s ease-in-out 2s infinite; }
+  .animate-float-slow     { animation: float 8s ease-in-out 1s infinite; }
+  .animate-fade-up        { animation: fadeUp .8s ease-out forwards; }
+  .animate-fade-up-delay  { animation: fadeUp .8s ease-out .2s forwards; }
+  .animate-fade-up-delay-2{ animation: fadeUp .8s ease-out .4s forwards; }
+
+  .dock-wrapper {
+    position: fixed; bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    left: 50%; transform: translateX(-50%);
+    z-index: 100; display: none;
+    border-radius: 28px; border: 2px solid #16a34a;
+  }
+  @media (min-width: 768px) { .dock-wrapper { display: block; } }
+
+  .dock {
+    background: rgba(236,253,245,.92);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(0,122,51,.25);
+    border-radius: 28px; padding: 8px 12px;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.9);
+    transition: all .4s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .dock-item {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; border-radius: 20px; cursor: pointer;
+    transition: all .35s cubic-bezier(.34,1.56,.64,1);
+    background: linear-gradient(145deg, #fff, #f8f9fa);
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .dock-item:hover {
+    transform: translateY(-12px) scale(1.18);
+    background: linear-gradient(135deg, #007A33, #15803d);
+    border-color: rgba(0,122,51,.6);
+    box-shadow: 0 16px 40px rgba(0,122,51,.35), 0 4px 12px rgba(0,0,0,.1);
+  }
+  .dock-item.active {
+    background: linear-gradient(135deg, #007A33, #15803d);
+    border-color: rgba(0,122,51,.6);
+    box-shadow: 0 8px 24px rgba(0,122,51,.3);
+  }
+  .dock-item svg { width: 26px; height: 26px; color: #007A33; transition: all .3s ease; }
+  .dock-item:hover svg,
+  .dock-item.active svg { color: #fff; }
+  .dock-item:hover svg { transform: scale(1.15); }
+
+  .dock-item .tooltip {
+    position: absolute; top: -40px; left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1a1a1a; color: #fff;
+    padding: 6px 14px; border-radius: 10px;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: all .35s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  }
+  .dock-item .tooltip::after {
+    content: ''; position: absolute; bottom: -5px; left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px; height: 10px; background: #1a1a1a; border-radius: 2px;
+  }
+  .dock-item:hover .tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .dock-divider {
+    width: 1px; height: 36px; flex-shrink: 0;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.1) 20%, rgba(0,0,0,.1) 80%, transparent);
+  }
+
+  #dir-carousel-track {
+    display: flex; align-items: center; justify-content: center;
+    position: relative; width: 100%; height: 480px;
+    perspective: 1200px; user-select: none; overflow: visible;
+  }
+  .dir-slide {
+    position: absolute; width: 340px;
+    transition: transform 0.65s cubic-bezier(0.34,1.1,0.64,1), opacity 0.55s ease, filter 0.55s ease;
+    cursor: pointer; user-select: none;
+    will-change: transform, opacity, filter;
+  }
+  .dir-slide-inner {
+    background: rgba(0,30,15,0.55);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(34,197,94,0.2); border-radius: 24px;
+    padding: 22px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .dir-slide.active { z-index: 10; transform: translateX(0) scale(1) translateZ(0); opacity: 1; pointer-events: all; }
+  .dir-slide.active .dir-slide-inner {
+    background: rgba(0,40,18,0.72); border-color: rgba(34,197,94,0.5);
+    box-shadow: 0 20px 56px rgba(0,0,0,0.5), 0 0 0 1px rgba(34,197,94,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .dir-slide.active .dir-slide-inner:hover { transform: scale(1.02); }
+
+  .dir-slide.prev1 { z-index: 7; transform: translateX(-340px) scale(0.87) translateZ(-80px); opacity: 0.9; pointer-events: all; }
+  .dir-slide.next1 { z-index: 7; transform: translateX(340px)  scale(0.87) translateZ(-80px); opacity: 0.9; pointer-events: all; }
+  .dir-slide.prev1 .dir-slide-inner,
+  .dir-slide.next1 .dir-slide-inner { filter: brightness(0.7); border-color: rgba(34,197,94,0.1); }
+
+  .dir-slide.prev2 { z-index: 4; transform: translateX(-570px) scale(0.7) translateZ(-180px); opacity: 0.6; pointer-events: all; }
+  .dir-slide.next2 { z-index: 4; transform: translateX(570px)  scale(0.7) translateZ(-180px); opacity: 0.6; pointer-events: all; }
+  .dir-slide.prev2 .dir-slide-inner,
+  .dir-slide.next2 .dir-slide-inner { filter: brightness(0.45); border-color: rgba(34,197,94,0.06); }
+
+  .dir-slide.hidden-slide { z-index: 1; transform: translateX(0) scale(0.4); opacity: 0; pointer-events: none; }
+
+  .dir-card-avatar {
+    width: 46px; height: 46px; border-radius: 14px; flex-shrink: 0;
+    background: rgba(34,197,94,0.18); border: 1px solid rgba(34,197,94,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 14px;
+  }
+  .dir-card-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 8px;
+    font-size: 10px; font-weight: 700; margin-top: 4px;
+    background: rgba(34,197,94,0.2); border: 1px solid rgba(34,197,94,0.35); color: #86efac;
+  }
+  .dir-card-desc {
+    background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 10px 12px;
+    font-size: 11.5px; color: rgba(255,255,255,0.85); line-height: 1.6; flex: 1;
+  }
+  .dir-card-email {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: rgba(134,239,172,0.7); text-decoration: none;
+    padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);
+    transition: color 0.2s; overflow: hidden;
+  }
+  .dir-card-email:hover { color: #86efac; }
+  .dir-card-email span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .dir-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 20;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(0,30,15,0.75); border: 1px solid rgba(34,197,94,0.4);
+    backdrop-filter: blur(12px); color: rgba(134,239,172,0.85);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .dir-arrow:hover {
+    background: linear-gradient(135deg, #007A33, #15803d);
+    border-color: #22c55e; color: #fff;
+    box-shadow: 0 8px 24px rgba(0,122,51,0.45);
+    transform: translateY(-50%) scale(1.1);
+  }
+  #dir-arrow-prev { left: 0.75rem; }
+  #dir-arrow-next { right: 0.75rem; }
+
+  .dir-search-wrap { position: relative; width: 100%; max-width: 380px; }
+  .dir-search-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+  #searchInput {
+    background: rgba(0,20,10,0.55) !important;
+    border: 1px solid rgba(34,197,94,0.3) !important;
+    border-radius: 16px !important; padding: 11px 16px 11px 44px !important;
+    color: #fff !important; font-size: 13px !important; width: 100% !important;
+    transition: all 0.3s !important; outline: none !important;
+    backdrop-filter: blur(16px) !important; -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2) !important;
+  }
+  #searchInput::placeholder { color: rgba(255,255,255,0.4) !important; }
+  #searchInput:focus {
+    border-color: rgba(34,197,94,0.65) !important;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.15), 0 2px 12px rgba(0,0,0,0.25) !important;
+  }
+
+  .dir-filter-btn {
+    background: rgba(0,20,10,0.5); color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(255,255,255,0.15); padding: 7px 16px;
+    border-radius: 12px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    cursor: pointer; transition: all 0.3s; backdrop-filter: blur(10px);
+  }
+  .dir-filter-btn:hover { background: rgba(34,197,94,0.2); color: #86efac; border-color: rgba(34,197,94,0.45); }
+  .dir-filter-active {
+    background: linear-gradient(135deg, rgba(0,100,42,0.9), rgba(21,128,61,0.9)) !important;
+    color: #fff !important; border-color: rgba(34,197,94,0.55) !important;
+    box-shadow: 0 4px 16px rgba(0,100,42,0.4);
+  }
+
+  #dir-indicator { display: flex; justify-content: center; margin-top: 14px; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .dir-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(134,239,172,0.22); transition: all 0.4s; cursor: pointer; }
+  .dir-dot.active { background: #22c55e; width: 20px; border-radius: 9999px; box-shadow: 0 0 8px rgba(34,197,94,0.5); }
+  #dir-counter { text-align: center; margin-top: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: rgba(134,239,172,0.35); }
+
+  #podcast-collage {
+    position: absolute; inset: 0; z-index: 0;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    grid-template-rows: 60% 40%;
+  }
+  .collage-cell { overflow: hidden; position: relative; }
+  .collage-cell:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .collage-cell:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .collage-cell:nth-child(3) { grid-column: 1; grid-row: 2; }
+  .collage-cell:nth-child(4) { grid-column: 2; grid-row: 2; }
+  .collage-cell img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.9s ease; }
+  .collage-cell::after { content: ''; position: absolute; inset: 0; border: 2px solid rgba(34,197,94,0.15); pointer-events: none; }
+
+  #podcast-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(160deg,
+      rgba(0,30,15,0.92)  0%,
+      rgba(0,60,25,0.82) 25%,
+      rgba(0,82,34,0.65) 50%,
+      rgba(0,50,20,0.45) 75%,
+      rgba(0,30,15,0.3) 100%
+    );
+  }
+  #podcast-content {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 2rem 2.5rem; gap: 1.5rem;
+  }
+  #podcast-audio-card { width: 100%; }
+  #podcast-text-card  { flex: 1; }
+
+  .glass-card {
+    background: rgba(0,40,18,0.55);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(34,197,94,0.25); border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  #collage-dots {
+    position: absolute; bottom: 1rem; right: 1.5rem; z-index: 3;
+    display: flex; gap: 6px; align-items: center;
+  }
+  .collage-dot-item { width: 6px; height: 6px; border-radius: 50%; background: rgba(134,239,172,0.35); transition: all 0.4s; }
+  .collage-dot-item.active { background: #22c55e; width: 20px; border-radius: 9999px; box-shadow: 0 0 8px rgba(34,197,94,0.6); }
+
+  #swipe-hint { display: none; }
+  @media (max-width: 767px) {
+    #swipe-hint {
+      display: flex; position: fixed; right: 10px; top: 50%;
+      transform: translateY(-50%); z-index: 90;
+      width: 32px; height: 32px;
+      align-items: center; justify-content: center;
+      border-radius: 50%; pointer-events: none;
+      background: rgba(34,197,94,0.18); border: 1px solid rgba(34,197,94,0.35); color: #22c55e;
+      animation: swipeHintPulse 1.8s ease-in-out infinite;
+    }
+    #swipe-hint svg    { width: 16px; height: 16px; }
+    #swipe-hint.hidden { opacity: 0; transition: opacity 0.4s; }
+    #swipe-hint.left { right: auto; left: 10px; }
+    #swipe-hint.left svg { transform: rotate(180deg); }
+  }
+
+  @media (min-width: 1024px) {
+    #podcast          { height: 100vh; overflow: hidden; }
+    #podcast-content  { flex-direction: row; align-items: center; padding: 2.5rem 4rem; gap: 3rem; }
+    #podcast-audio-card { width: 42%; flex-shrink: 0; }
+  }
+  @media (max-width: 1023px) {
+    #podcast-collage  { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2,1fr); opacity: 0.6; }
+    #podcast-overlay  { background: rgba(0,20,10,0.88); }
+    #podcast-content  { overflow-y: auto; padding: 1.5rem; justify-content: flex-start; padding-top: 2rem; padding-bottom: 5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .dir-slide { width: 260px; }
+    .dir-slide.prev1 { transform: translateX(-210px) scale(0.82) translateZ(-80px); }
+    .dir-slide.next1 { transform: translateX(210px)  scale(0.82) translateZ(-80px); }
+    .dir-slide.prev2 { transform: translateX(-350px) scale(0.6)  translateZ(-180px); opacity: 0.4; }
+    .dir-slide.next2 { transform: translateX(350px)  scale(0.6)  translateZ(-180px); opacity: 0.4; }
+    #dir-carousel-track { height: 430px; }
+    #dir-arrow-prev { left: 0.2rem; }
+    #dir-arrow-next { right: 0.2rem; }
+    .dir-arrow { width: 38px; height: 38px; }
+  }
+  @media (min-width: 481px) and (max-width: 767px) {
+    .dir-slide { width: 290px; }
+    .dir-slide.prev1 { transform: translateX(-250px) scale(0.84) translateZ(-80px); }
+    .dir-slide.next1 { transform: translateX(250px)  scale(0.84) translateZ(-80px); }
+    .dir-slide.prev2 { transform: translateX(-420px) scale(0.64) translateZ(-180px); opacity: 0.5; }
+    .dir-slide.next2 { transform: translateX(420px)  scale(0.64) translateZ(-180px); opacity: 0.5; }
+    #dir-carousel-track { height: 450px; }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .dir-slide { width: 310px; }
+    .dir-slide.prev1 { transform: translateX(-280px) scale(0.86) translateZ(-80px); }
+    .dir-slide.next1 { transform: translateX(280px)  scale(0.86) translateZ(-80px); }
+    .dir-slide.prev2 { transform: translateX(-480px) scale(0.68) translateZ(-180px); }
+    .dir-slide.next2 { transform: translateX(480px)  scale(0.68) translateZ(-180px); }
+    #dir-carousel-track { height: 460px; }
+  }
+  @media (min-width: 1280px) {
+    .dir-slide { width: 360px; }
+    .dir-slide.prev1 { transform: translateX(-370px) scale(0.88) translateZ(-80px); }
+    .dir-slide.next1 { transform: translateX(370px)  scale(0.88) translateZ(-80px); }
+    .dir-slide.prev2 { transform: translateX(-620px) scale(0.72) translateZ(-180px); }
+    .dir-slide.next2 { transform: translateX(620px)  scale(0.72) translateZ(-180px); }
+    #dir-carousel-track { height: 500px; }
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    #directorio { background-attachment: scroll, scroll, scroll, scroll; }
+  }
+</style>
+
+<script is:inline>
+const directorio = [
+    { nombre:"Wilfred Smith Torres Gutiérrez de Piñeres", cargo:"Vicerrectoría General", categoria:"direccion", email:"vicerrectoriaguachica@unicesar.edu.co", descripcion:"Coordina la gestión general de la seccional, articula las decisiones rectorales y orienta el funcionamiento administrativo y académico en la sede." },
+    { nombre:"Ibeth Rincón Rincón", cargo:"Secretaría Vicerrectoría General de Seccional", categoria:"admin", email:"vicerrectoriaguachica@unicesar.edu.co", descripcion:"Apoya la agenda, la gestión documental y la atención administrativa de la dirección seccional." },
+    { nombre:"Juvenal Flórez Vergara", cargo:"Dirección Administrativa y Financiera", categoria:"admin", email:"financieraaguachica@unicesar.edu.co", descripcion:"Administra recursos humanos, financieros, físicos y logísticos; apoya la operación institucional y la ejecución presupuestal." },
+    { nombre:"Martha Emilia Álvarez Jiménez", cargo:"Secretaría Dirección Administrativa y Financiera", categoria:"admin", email:"financieraaguachica@unicesar.edu.co", descripcion:"Apoya el trámite documental, la comunicación interna y la atención operativa de la dirección financiera." },
+    { nombre:"Emiliano Piedrahita Porras", cargo:"Dirección Académica", categoria:"direccion", email:"direccionacademicaaguachica@unicesar.edu.co", descripcion:"Coordina los procesos académicos, el acompañamiento curricular y la articulación con programas y docentes." },
+    { nombre:"Nharli Isabel Franco Carcamo", cargo:"Dirección de Departamento de Ciencias Contables", categoria:"direccion", email:"dptocontadoriapublica@unicesar.edu.co", descripcion:"Lidera el desarrollo académico del área contable, el seguimiento curricular y el apoyo a estudiantes y docentes del programa." },
+    { nombre:"Wilson Sánchez Hernández", cargo:"Coordinación de Tecnología Agropecuaria", categoria:"direccion", email:"wilsonsanchez@unicesar.edu.co", descripcion:"Coordina actividades académicas y de seguimiento del programa de Tecnología Agropecuaria." },
+    { nombre:"María Cristina Ramírez Zabala", cargo:"Secretaría Dirección de Departamento de Ciencias Contables y Tecnología Agropecuaria", categoria:"admin", email:"ptocontaduriapublica@unicesar.edu.co", descripcion:"Apoya la gestión administrativa y académica de ambas dependencias." },
+    { nombre:"Yazmin Hernandez Alvarez", cargo:"Dirección de Departamento de Ciencias Administrativas", categoria:"direccion", email:"yicethgonzalez@unicesar.edu.co", descripcion:"Orienta procesos académicos y administrativos del área de ciencias administrativas." },
+    { nombre:"Luis Hernando Restrepo Sierra", cargo:"Dirección de Departamento de Ciencias Económicas", categoria:"direccion", email:"luisrestrepo@unicesar.edu.co", descripcion:"Coordina el funcionamiento académico del área económica y su articulación con el plan de estudios." },
+    { nombre:"Sandra Paéz Ríos / Elcy Robles", cargo:"Secretaría Departamento de Ciencias Administrativas y Dirección de Departamento de Ciencias Económicas", categoria:"admin", email:"coordeconomiaguachica@unicesar.edu.co", descripcion:"Realiza apoyo secretarial y de gestión documental para ambas dependencias." },
+    { nombre:"Héctor Camilo Alvernia Verjel", cargo:"Dirección de Departamento de Ciencias Agroindustriales", categoria:"direccion", email:"agroindustriaaguachica@unicesar.edu.co", descripcion:"Dirige la gestión académica del área agroindustrial y su relación con docencia e investigación." },
+    { nombre:"Lizeth Badillo Duran", cargo:"Dirección de Departamento de Sistemas e Informática", categoria:"direccion", email:"ingsistemasaguachica@unicesar.edu.co", descripcion:"Coordina los procesos académicos del programa de sistemas e informática." },
+    { nombre:"Laura Marcela Felizzola Conde", cargo:"Secretaría Dirección de Departamento de Sistemas e Informática y Departamento de Ciencias Agroindustriales", categoria:"admin", email:"coordsistemasaguachica@unicesar.edu.co", descripcion:"Brinda soporte administrativo y documental a ambas áreas." },
+    { nombre:"Rocío Ropero Pallares", cargo:"Dirección de Departamento de Ciencias Ambientales y Sanitaria", categoria:"direccion", email:"rocioropero@unicesar.edu.co", descripcion:"Lidera la gestión académica del área ambiental y sanitaria." },
+    { nombre:"Celina Ossa Vega", cargo:"Secretaría Departamento de Ciencias Ambientales y Sanitaria", categoria:"admin", email:"coordambientalaguachica@unicesar.edu.co", descripcion:"Atiende el soporte administrativo y secretarial del departamento." },
+    { nombre:"Deime Fernando Martínez Ruiz", cargo:"Oficina de Registro y Control Académico", categoria:"admin", email:"registroaguachica@unicesar.edu.co", descripcion:"Gestiona admisiones, matrícula, historia académica, certificados y procesos de control académico de estudiantes." },
+    { nombre:"María Irene Obregón Ropero / Sandra Milena Paez Ríos / Yairis Johana Daza Mejia", cargo:"Secretaría Centro de Admisiones, Registro y Control Académico", categoria:"admin", email:"registroaguachica@unicesar.edu.co", descripcion:"Apoya la atención al público, la radicación de trámites y la gestión documental del área." },
+    { nombre:"Nubia Bruges Velázquez", cargo:"Oficina de Almacén e Inventarios", categoria:"admin", email:"almaceninventarioaguachica@unicesar.edu.co", descripcion:"Administra bienes, inventarios, suministros y control de elementos institucionales." },
+    { nombre:"Jesús Arévalo Moncada", cargo:"Consejo de Programas Académicos / Oficina Jurídica", categoria:"academico", email:"consejodeprogramasaguachica@unicesar.edu.co", descripcion:"Apoya decisiones académicas y jurídicas, y sirve de soporte para trámites normativos y reglamentarios." },
+    { nombre:"Andrea Johana Navarro Claro", cargo:"Apoyo a Calidad", categoria:"admin", email:"gestiondecalidadaguachica@unicesar.edu.co", descripcion:"Acompaña procesos de aseguramiento de la calidad, autoevaluación, mejoramiento y soporte a acreditación." },
+    { nombre:"Yiceth Alejandra Gonzáles Duarte", cargo:"Coordinación de Investigación y Proyectos", categoria:"academico", email:"coordproyectosaguachica@unicesar.edu.co", descripcion:"Impulsa semilleros, proyectos, investigación y articulación con extensión y producción académica." },
+    { nombre:"Elcy Robles Machuca", cargo:"Secretaría Coordinación de Investigación", categoria:"admin", email:"coordproyectosaguachica@unicesar.edu.co", descripcion:"Apoya la gestión documental y operativa de investigación y proyectos." },
+    { nombre:"Gonzalo Trespalacios González", cargo:"Biblioteca", categoria:"academico", email:"bibliotecaaguachica@unicesar.edu.co", descripcion:"Brinda acceso a recursos bibliográficos, apoyo a estudio, consulta e investigación." },
+    { nombre:"Flor Moncada Ariza", cargo:"Bienestar Institucional", categoria:"bienestar", email:"bienestaraguachica@unicesar.edu.co", descripcion:"Atiende acompañamiento estudiantil, programas de bienestar, permanencia y desarrollo integral." },
+    { nombre:"José Gregorio Jorge García", cargo:"Oficina de Seguimiento a Egresados", categoria:"admin", email:"egresados.aguachica@unicesar.edu.co", descripcion:"Mantiene relación con graduados, seguimiento laboral y redes de egresados." },
+    { nombre:"Roky Maldonado Martinez", cargo:"Oficina de Posgrados", categoria:"admin", email:"posgradosaguachica@unicesar.edu.co", descripcion:"Orienta la oferta y gestión de programas de posgrado y su información académica." },
+    { nombre:"Andrea Johana Navarro Claro", cargo:"Sistema de Aseguramiento de la Calidad", categoria:"admin", email:"autoevaluacion.aguachica@unicesar.edu.co", descripcion:"Coordina procesos de calidad institucional, seguimiento de indicadores y mejoramiento continuo." },
+    { nombre:"Jorge Hamilton Chaverra Márquez", cargo:"Oficina de Internacionalización ORPI", categoria:"admin", email:"jorgechaverra@unicesar.edu.co", descripcion:"Gestiona movilidad, cooperación y proyección internacional de la seccional." },
+    { nombre:"Leonardo Enrique Guzmán Salcedo", cargo:"Servicios Generales", categoria:"admin", email:"serviciosgeneralesaguachica@unicesar.edu.co", descripcion:"Garantiza apoyo logístico, aseo, mantenimiento y operación general de la sede." },
+    { nombre:"Miguel Eduardo Jaraba Núñez", cargo:"Oficina de Emprendimiento", categoria:"academico", email:"emprendimientoaguachica", descripcion:"Promueve iniciativas de emprendimiento, innovación y acompañamiento a proyectos productivos." },
+    { nombre:"Iván Darío Campo Calderón", cargo:"Proceso de Gestión, Proyección y Tramite de Convenios de Cooperación", categoria:"admin", email:"conveniosaguachica@unicesar.edu.co", descripcion:"Apoya la coordinación de procesos institucionales transversales y la articulación administrativa." },
+    { nombre:"Royer Oswaldo Lizcano Ruiz", cargo:"Líder de Gestión TIC", categoria:"admin", email:"gestionticaguachica@unicesar.edu.co", descripcion:"Administra soporte tecnológico, sistemas de información y servicios TIC de la seccional." },
+    { nombre:"Iván Darío Campo Calderón", cargo:"Oficina de PQRS", categoria:"admin", email:"pqrsaguachica@unicesar.edu.co", descripcion:"Recibe, tramita y hace seguimiento a peticiones, quejas, reclamos y sugerencias." },
+    { nombre:"Pedro Mauricio Solano Yazzo", cargo:"Apoyo Oficina de Posgrados", categoria:"admin", email:"pedrosolano@unicesar.edu.co", descripcion:"Brinda asistencia administrativa y documental a posgrados." },
+];
+
+const sectionOrder = ['hero','directorio','video','podcast','identidad','ubicacion'];
+let currentSectionIndex = 0;
+
+function scrollToSection(id) {
+    const idx = sectionOrder.indexOf(id);
+    if (idx === -1) return;
+    currentSectionIndex = idx;
+    document.getElementById('sections-container').style.transform = `translateX(-${idx * 100}vw)`;
+    const target = document.getElementById(id);
+    if (target) target.scrollTop = 0;
+    document.querySelectorAll('.dock-item').forEach((item, i) => item.classList.toggle('active', i === idx));
+    const hint = document.getElementById('swipe-hint');
+    if (hint) hint.classList.toggle('left', idx === sectionOrder.length - 1);
+}
+
+let currentFilter = 'all';
+let searchDebounceTimer = null;
+
+function setFilter(cat) {
+    currentFilter = cat;
+    document.querySelectorAll('.dir-filter-btn').forEach(b => b.classList.remove('dir-filter-active'));
+    document.getElementById('btn-' + cat)?.classList.add('dir-filter-active');
+    applyFilters();
+}
+
+function applyFilters() {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(() => {
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        renderCards(directorio.filter(p =>
+            (currentFilter === 'all' || p.categoria === currentFilter) &&
+            (!query || [p.nombre, p.cargo, p.descripcion, p.categoria].some(v => v.toLowerCase().includes(query)))
+        ));
+    }, 200);
+}
+
+const catColors  = { direccion:'#22c55e', academico:'#4ade80', admin:'#86efac', bienestar:'#bbf7d0' };
+let dirItems = [], dirIndex = 0, dirAnimating = false;
+let dirTouchStartX = 0, dirTouchStartY = 0;
+
+const dirGetInitials = n => n.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase();
+
+function dirBuildSlide({ nombre, cargo, categoria, descripcion, email }) {
+    return `<div class="dir-slide-inner">
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div class="dir-card-avatar" style="color:${catColors[categoria] || '#22c55e'}">${dirGetInitials(nombre)}</div>
+            <div style="min-width:0;flex:1;">
+                <p style="font-weight:800;font-size:13px;color:#fff;line-height:1.35;margin-bottom:4px;">${nombre}</p>
+                <span class="dir-card-badge">${cargo}</span>
+            </div>
+        </div>
+        <div class="dir-card-desc">${descripcion}</div>
+        <a href="mailto:${email}" class="dir-card-email">
+            <svg style="width:13px;height:13px;flex-shrink:0;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+            </svg>
+            <span>${email}</span>
+        </a>
+    </div>`;
+}
+
+function dirRender() {
+    const track     = document.getElementById('dir-carousel-track');
+    const noResults = document.getElementById('noResults');
+    const indicator = document.getElementById('dir-indicator');
+    const counter   = document.getElementById('dir-counter');
+    if (!track) return;
+
+    if (!dirItems.length) {
+        track.innerHTML = indicator.innerHTML = counter.textContent = '';
+        noResults.classList.remove('hidden');
+        return;
+    }
+    noResults.classList.add('hidden');
+    dirIndex = ((dirIndex % dirItems.length) + dirItems.length) % dirItems.length;
+
+    const total   = dirItems.length;
+    const offsets = total === 1 ? [0] : total === 2 ? [-1,0,1] : [-2,-1,0,1,2];
+    const posMap  = {'-2':'prev2','-1':'prev1','0':'active','1':'next1','2':'next2'};
+
+    Array.from(track.children).forEach(c => { c.style.opacity = '0'; c.style.transform += ' scale(0.95)'; });
+
+    setTimeout(() => {
+        track.innerHTML = '';
+        offsets.forEach(o => {
+            const slide = document.createElement('div');
+            slide.className = 'dir-slide ' + (posMap[String(o)] || 'hidden-slide');
+            slide.style.opacity = '0';
+            slide.innerHTML = dirBuildSlide(dirItems[((dirIndex + o) % total + total) % total]);
+            if (o !== 0) slide.onclick = () => { if (!dirAnimating) dirGo(o); };
+            track.appendChild(slide);
+        });
+        track.offsetHeight;
+        Array.from(track.children).forEach((c, i) => setTimeout(() => { c.style.opacity = ''; }, i * 30));
+        dirAnimating = false;
+        track.style.pointerEvents = '';
+    }, 120);
+
+    if (indicator) {
+        const maxDots = Math.min(total, 10);
+        indicator.innerHTML = '';
+        for (let i = 0; i < maxDots; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dir-dot' + (i === dirIndex % maxDots ? ' active' : '');
+            dot.onclick = () => { if (!dirAnimating) { dirIndex = i; dirAnimate(); } };
+            indicator.appendChild(dot);
+        }
+    }
+    if (counter) counter.textContent = `${dirIndex + 1} / ${total}`;
+}
+
+function dirAnimate() {
+    if (dirAnimating) return;
+    dirAnimating = true;
+    const track = document.getElementById('dir-carousel-track');
+    if (track) track.style.pointerEvents = 'none';
+    dirRender();
+}
+
+function dirGo(offset) {
+    dirIndex = (dirIndex + offset + dirItems.length) % dirItems.length;
+    dirAnimate();
+}
+
+function dirNext() { if (!dirAnimating && dirItems.length) dirGo(1); }
+function dirPrev() { if (!dirAnimating && dirItems.length) dirGo(-1); }
+
+function renderCards(items) {
+    dirItems = Array.isArray(items) ? [...items] : [];
+    dirIndex = 0;
+    dirAnimating = false;
+    dirRender();
+}
+
+const identidadItems = ['escudo','bandera','himno','logo','colores'];
+
+function toggleIdentidad(id) {
+    const isOpen = !document.getElementById('panel-' + id).classList.contains('hidden');
+    identidadItems.forEach(item => {
+        document.getElementById('panel-' + item).classList.add('hidden');
+        document.getElementById('arrow-' + item).style.transform = 'rotate(0deg)';
+    });
+    if (!isOpen) {
+        document.getElementById('panel-' + id).classList.remove('hidden');
+        document.getElementById('arrow-' + id).style.transform = 'rotate(180deg)';
+    }
+}
+
+function revealOnScroll() {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.88)
+            el.classList.add('visible');
+    });
+}
+
+function typeWriter(id, text, speed, cb) {
+    const el = document.getElementById(id);
+    let i = 0;
+    const type = () => i < text.length
+        ? (el.textContent += text[i++], setTimeout(type, speed))
+        : cb?.();
+    type();
+}
+
+let galeriaIndex = 0;
+const galeriaTotal = 6;
+let galeriaTimer = null;
+
+function galeriaIr(idx) {
+    galeriaIndex = idx;
+    document.getElementById('galeria-slides').style.transform = `translateX(-${idx * 20}%)`;
+    document.querySelectorAll('.galeria-dot').forEach((dot, i) => {
+        dot.style.background = i === idx ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
+        dot.style.width      = i === idx ? '24px' : '8px';
+        dot.style.borderRadius = '9999px';
+    });
+}
+
+function galeriaSiguiente() { galeriaIr((galeriaIndex + 1) % galeriaTotal); reiniciarTimerGaleria(); }
+function galeriaAnterior()  { galeriaIr((galeriaIndex - 1 + galeriaTotal) % galeriaTotal); reiniciarTimerGaleria(); }
+function reiniciarTimerGaleria() { clearInterval(galeriaTimer); galeriaTimer = setInterval(galeriaSiguiente, 5000); }
+
+const podcastLines = [
+    { text: 'LA UPC',   color: '#ffffff' },
+    { text: 'Y LA',     color: '#22c55e' },
+    { text: 'CONSULTA', color: '#ffffff' },
+    { text: 'POPULAR',  color: '#22c55e' },
+];
+
+function runPodcastTypewriter() {
+    const el = document.getElementById('podcast-typewriter');
+    if (!el) return;
+
+    const cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    cursor.style.cssText = 'display:inline-block;width:3px;height:0.85em;background:#22c55e;vertical-align:middle;position:relative;top:-4px;animation:parpadeo 0.7s step-end infinite;margin-left:3px;';
+
+    const spans = [];
+    let li = 0, ci = 0;
+    let mode = 'typing';
+
+    function reset() {
+        el.innerHTML = '';
+        el.appendChild(cursor);
+        spans.length = 0;
+        li = 0; ci = 0;
+        mode = 'typing';
+    }
+
+    function ensureSpan(idx) {
+        if (!spans[idx]) {
+            const s = document.createElement('span');
+            s.style.cssText = `color:${podcastLines[idx].color};display:block;`;
+            if (cursor.parentNode !== el) el.appendChild(cursor);
+            el.insertBefore(s, cursor);
+            spans[idx] = s;
+        }
+        return spans[idx];
+    }
+
+    function moveCursorTo(span) {
+        if (cursor.parentNode !== span) {
+            span.appendChild(cursor);
+        }
+    }
+
+    function step() {
+        if (mode === 'typing') {
+            if (li >= podcastLines.length) {
+                mode = 'erasing';
+                li = podcastLines.length - 1;
+                ci = podcastLines[li].text.length;
+                setTimeout(step, 2500);
+                return;
+            }
+            const line = podcastLines[li];
+            const span = ensureSpan(li);
+            ci++;
+            span.textContent = line.text.substring(0, ci);
+            moveCursorTo(span);
+            const delay = ci >= line.text.length ? 180 : 70;
+            if (ci >= line.text.length) { li++; ci = 0; }
+            setTimeout(step, delay);
+        } else {
+            if (li < 0) { reset(); setTimeout(step, 500); return; }
+            const line = podcastLines[li];
+            const span = spans[li];
+            if (ci <= 0) {
+                if (span && span.parentNode) span.remove();
+                delete spans[li];
+                li--;
+                if (li >= 0) ci = podcastLines[li].text.length;
+                setTimeout(step, 80);
+                return;
+            }
+            ci--;
+            span.textContent = line.text.substring(0, ci);
+            moveCursorTo(span);
+            setTimeout(step, 40);
+        }
+    }
+
+    reset();
+    step();
+}
+
+const collageSrcs = [
+    'assets/imagenes/consulta-1.webp',
+    'assets/imagenes/consulta-0.webp',
+    'assets/imagenes/consulta-3.webp',
+    'assets/imagenes/consulta-5.webp',
+];
+let collageOffset = 0;
+
+function rotarCollage() {
+    collageOffset = (collageOffset + 1) % collageSrcs.length;
+    for (let i = 0; i < 4; i++) {
+        const img = document.getElementById('cell-' + i)?.querySelector('img');
+        if (!img) continue;
+        img.style.opacity = '0';
+        setTimeout(() => { img.src = collageSrcs[(i + collageOffset) % collageSrcs.length]; img.style.opacity = '1'; }, 450);
+    }
+    document.querySelectorAll('.collage-dot-item').forEach((d, i) => d.classList.toggle('active', i === collageOffset % 4));
+}
+
+let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+
+window.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+}, { passive:true });
+
+window.addEventListener('touchend', e => {
+    if (window.innerWidth >= 768) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+    if (Date.now() - touchStartTime > 400 || Math.abs(deltaX) < 50 || Math.abs(deltaY) > Math.abs(deltaX) * 0.6) return;
+    scrollToSection(sectionOrder[currentSectionIndex + (deltaX < 0 ? 1 : -1)] || sectionOrder[currentSectionIndex]);
+}, { passive:true });
+
+window.addEventListener('wheel',     e => { if (!e.target.closest('#sections-container > section')) e.preventDefault(); }, { passive:false });
+window.addEventListener('touchmove', e => { if (!e.target.closest('#sections-container > section')) e.preventDefault(); }, { passive:false });
+
+window.addEventListener('keydown', e => {
+    if (['PageUp','PageDown','Home','End'].includes(e.key)) { e.preventDefault(); return; }
+    if (e.key === 'ArrowRight' && currentSectionIndex < sectionOrder.length - 1) { e.preventDefault(); scrollToSection(sectionOrder[currentSectionIndex + 1]); }
+    if (e.key === 'ArrowLeft'  && currentSectionIndex > 0)                        { e.preventDefault(); scrollToSection(sectionOrder[currentSectionIndex - 1]); }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    typeWriter('typewriter-1', 'Directorio', 100, () => setTimeout(() => typeWriter('typewriter-2', 'Institucional', 100), 200));
+
+    renderCards(directorio);
+    document.querySelectorAll('.dock-item')[0]?.classList.add('active');
+
+    const track = document.getElementById('dir-carousel-track');
+    if (track) {
+        track.addEventListener('touchstart', e => {
+            dirTouchStartX = e.touches[0].clientX;
+            dirTouchStartY = e.touches[0].clientY;
+        }, { passive:true });
+        track.addEventListener('touchmove', e => {
+            const dx = Math.abs(e.touches[0].clientX - dirTouchStartX);
+            const dy = Math.abs(e.touches[0].clientY - dirTouchStartY);
+            if (dx > 15 && dx > dy * 1.5) e.stopPropagation();
+        }, { passive:true });
+    }
+
+    const map = L.map('mapa-upc', { zoomControl:true, scrollWheelZoom:false }).setView([8.31480, -73.59644], 16);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution:'© OpenStreetMap © CARTO', maxZoom:19 }).addTo(map);
+    L.marker([8.315, -73.59644], {
+        icon: L.divIcon({
+            className: '',
+            html: `<div class="animate-bounce" style="width:44px;height:44px;">
+                <div style="background:#15803d;border:3px solid #fff;border-radius:50% 50% 50% 0;width:100%;height:100%;transform:rotate(-45deg);box-shadow:0 4px 12px rgba(0,122,51,.4);display:flex;align-items:center;justify-content:center;">
+                    <img src="assets/imagenes/loguito.webp" style="width:28px;height:28px;object-fit:contain;transform:rotate(45deg);border-radius:50%;"/>
+                </div>
+            </div>`,
+            iconSize:[44,44], iconAnchor:[22,44], popupAnchor:[0,-48],
+        })
+    }).addTo(map).bindPopup('<strong style="color:#007A33">UPC Seccional Aguachica</strong><br>Cra. 40 #1 Norte, Aguachica, Cesar').openPopup();
+
+    revealOnScroll();
+    document.querySelectorAll('#sections-container > section').forEach(s => s.addEventListener('scroll', revealOnScroll, { passive:true }));
+
+    document.querySelectorAll('.dock-item').forEach(item => {
+        item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); item.click(); } });
+    });
+
+    document.querySelectorAll('audio').forEach(a => a.addEventListener('contextmenu', e => e.preventDefault()));
+
+    galeriaIr(0);
+    galeriaTimer = setInterval(galeriaSiguiente, 5000);
+
+    runPodcastTypewriter();
+    setInterval(rotarCollage, 5000);
+});
+</script>
+</body>
+</html>

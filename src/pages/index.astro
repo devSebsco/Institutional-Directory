@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import NavigationDock from '../components/NavigationDock.astro';
+import SectionInicio from '../components/SectionInicio.astro';
+import SectionDirectorio from '../components/SectionDirectorio.astro';
+import SectionVideo from '../components/SectionVideo.astro';
+import SectionPodcast from '../components/SectionPodcast.astro';
+import SectionIdentidad from '../components/SectionIdentidad.astro';
+import SectionUbicacion from '../components/SectionUbicacion.astro';
+---
+
+<MainLayout>
+  <div id="swipe-hint" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18l6-6-6-6"/>
+    </svg>
+  </div>
+
+  <div id="sections-container">
+    <SectionInicio />
+    <SectionDirectorio />
+    <SectionVideo />
+    <SectionPodcast />
+    <SectionIdentidad />
+    <SectionUbicacion />
+  </div>
+
+  <NavigationDock />
+</MainLayout>

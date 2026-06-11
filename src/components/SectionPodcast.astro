@@ -1,0 +1,92 @@
+<section id="podcast" class="relative overflow-hidden" style="height:100vh;min-height:600px;background:#071a0c;">
+  <div id="podcast-collage">
+    <div class="collage-cell" id="cell-0"><img src="/assets/imagenes/consulta-1.webp" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#003D19,#007A33)'"></div>
+    <div class="collage-cell" id="cell-1"><img src="/assets/imagenes/consulta-5.webp" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#005222,#15803d)'"></div>
+    <div class="collage-cell" id="cell-2"><img src="/assets/imagenes/consulta-3.webp" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#003D19,#16a34a)'"></div>
+    <div class="collage-cell" id="cell-3"><img src="/assets/imagenes/consulta-0.webp" alt="" onerror="this.parentElement.style.background='linear-gradient(135deg,#002D14,#007A33)'"></div>
+  </div>
+
+  <div id="podcast-overlay"></div>
+
+  <div id="collage-dots">
+    <div class="collage-dot-item active"></div>
+    <div class="collage-dot-item"></div>
+    <div class="collage-dot-item"></div>
+    <div class="collage-dot-item"></div>
+  </div>
+
+  <div id="podcast-content">
+    <div id="podcast-audio-card" class="glass-card p-6 lg:p-8 flex flex-col gap-5 duration-300 hover:scale-105">
+      <div class="flex items-center gap-3">
+        <img src="/assets/imagenes/loguito.webp" alt="UPC" class="w-7 h-7 object-contain rounded-sm animate-bounce flex-shrink-0" loading="lazy">
+        <div class="w-px h-8 flex-shrink-0" style="background:linear-gradient(180deg,transparent,#22c55e,transparent)"></div>
+        <div>
+          <p class="text-xs font-bold tracking-[0.25em] uppercase" style="color:#86efac">Cápsula del Tiempo</p>
+          <p class="text-xs tracking-widest uppercase" style="color:rgba(134,239,172,0.45)">Echandole un ojo a la historia</p>
+        </div>
+      </div>
+
+      <h2 id="podcast-title" class="font-black leading-none" style="font-size:clamp(2rem,5vw,3.8rem);color:#ffffff;letter-spacing:-0.03em;line-height:0.9;min-height:3.8em;">
+        <span id="podcast-typewriter"></span>
+      </h2>
+
+      <div class="flex items-center gap-3">
+        <div class="h-px flex-1" style="background:linear-gradient(90deg,#22c55e,transparent)"></div>
+        <span class="text-xs font-bold tracking-widest uppercase" style="color:rgba(134,239,172,0.5)">Podcast</span>
+        <div class="h-px flex-1" style="background:linear-gradient(90deg,transparent,#22c55e)"></div>
+      </div>
+
+      <div class="rounded-2xl p-4 duration-300 hover:scale-105" style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25)">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 animate-pulse" style="background:linear-gradient(135deg,#007A33,#22c55e)">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+          </div>
+          <div>
+            <p class="text-white font-bold text-sm leading-tight">Escucha el Podcast</p>
+            <p class="text-xs" style="color:rgba(134,239,172,0.65)">Consulta Popular · UPC Aguachica</p>
+          </div>
+        </div>
+        <audio controls controlslist="nodownload" class="w-full" style="accent-color:#22c55e;height:32px" oncontextmenu="return false" preload="none">
+          <source src="/assets/audio/podcast.mp3" type="audio/mp3">
+        </audio>
+        <p class="text-xs mt-2 text-center" style="color:rgba(255,255,255,0.25)">Este podcast solo lo podras escuchar en esta página</p>
+      </div>
+    </div>
+
+    <div id="podcast-text-card" class="glass-card p-6 lg:p-8 flex flex-col gap-4 duration-300 hover:scale-105">
+      <div class="flex items-center gap-2 mb-1">
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3)">
+          <img src="/assets/imagenes/consulta-2.avif" alt="" class="w-7 h-7 object-contain rounded-sm" loading="lazy">
+        </div>
+        <p class="text-xs font-bold tracking-[0.2em] uppercase" style="color:#86efac">Contexto Histórico</p>
+      </div>
+
+      <h3 class="font-black text-white text-lg lg:text-xl leading-tight">
+        La Consulta Popular<br><span style="color:#4ade80">por la Paz en Aguachica</span>
+      </h3>
+      <div class="h-px w-12" style="background:linear-gradient(90deg,#22c55e,transparent)"></div>
+
+      <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.75)">
+        En 1997, Aguachica vivió un momento histórico: la primera consulta popular por la paz en Colombia. En medio del conflicto armado, la ciudadanía se movilizó para decirle <span style="color:#86efac;font-weight:600">SÍ a la paz</span> y NO a la violencia.
+      </p>
+      <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.65)">
+        La Universidad Popular del Cesar, Seccional Aguachica, fue testigo y protagonista de este proceso. Desde sus aulas se formaron líderes que impulsaron la participación ciudadana como herramienta de construcción de paz territorial.
+      </p>
+
+      <div class="flex gap-3 mt-1">
+        <div class="flex-1 rounded-xl p-3 text-center duration-300 hover:scale-105" style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15)">
+          <p class="font-black text-2xl" style="color:#22c55e">1997</p>
+          <p class="text-xs" style="color:rgba(255,255,255,0.4)">Año histórico</p>
+        </div>
+        <div class="flex-1 rounded-xl p-3 text-center duration-300 hover:scale-105" style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15)">
+          <p class="font-black text-2xl" style="color:#22c55e">Paz</p>
+          <p class="text-xs" style="color:rgba(255,255,255,0.4)">El voto del pueblo</p>
+        </div>
+        <div class="flex-1 rounded-xl p-3 text-center duration-300 hover:scale-105" style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15)">
+          <p class="font-black text-2xl" style="color:#22c55e">UPC</p>
+          <p class="text-xs" style="color:rgba(255,255,255,0.4)">Presente</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

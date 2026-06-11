@@ -1,0 +1,240 @@
+<section id="identidad" class="relative" style="height:100vh;overflow:hidden;">
+  <div class="absolute inset-0 z-0">
+    <div id="galeria-slides" class="flex h-full transition-transform duration-700 ease-in-out" style="width:500%">
+      <div class="h-full flex-shrink-0" style="width:20%"><img src="/assets/imagenes/galeria-2.avif"           alt="" class="w-full h-full object-cover"></div>
+      <div class="h-full flex-shrink-0" style="width:20%"><img src="/assets/imagenes/galeria-5..avif"          alt="" class="w-full h-full object-cover" loading="lazy"></div>
+      <div class="h-full flex-shrink-0" style="width:20%"><img src="/assets/imagenes/galeria-3..avif"          alt="" class="w-full h-full object-cover" loading="lazy"></div>
+      <div class="h-full flex-shrink-0" style="width:20%"><img src="/assets/imagenes/fondo-seccion-video.avif" alt="" class="w-full h-full object-cover" loading="lazy"></div>
+      <div class="h-full flex-shrink-0" style="width:20%"><img src="/assets/imagenes/galeria-4.avif"           alt="" class="w-full h-full object-cover" loading="lazy"></div>
+      <div class="h-full flex-shrink-0" style="width:20%"><img src="/assets/imagenes/galeria-6.avif"           alt="" class="w-full h-full object-cover" loading="lazy"></div>
+    </div>
+    <div class="absolute inset-0" style="background:linear-gradient(160deg,rgba(0,20,10,.75) 0%,rgba(0,60,25,.70) 50%,rgba(0,40,15,.75) 100%)"></div>
+  </div>
+
+  <button onclick="galeriaAnterior()" class="absolute left-4 z-20 w-12 h-12 rounded-full flex items-center justify-center border border-white/30 transition-all duration-300 hover:scale-110" style="top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);backdrop-filter:blur(12px)">
+    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+  </button>
+  <button onclick="galeriaSiguiente()" class="absolute right-4 z-20 w-12 h-12 rounded-full flex items-center justify-center border border-white/30 transition-all duration-300 hover:scale-110" style="top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);backdrop-filter:blur(12px)">
+    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+  </button>
+
+  <div class="absolute bottom-6 left-1/2 z-20 flex gap-2" style="transform:translateX(-50%)">
+    <div class="galeria-dot rounded-full transition-all duration-300 cursor-pointer" onclick="galeriaIr(0)" style="width:24px;height:8px;background:rgba(255,255,255,0.9)"></div>
+    <div class="galeria-dot w-2 h-2 rounded-full transition-all duration-300 cursor-pointer" onclick="galeriaIr(1)" style="background:rgba(255,255,255,0.4)"></div>
+    <div class="galeria-dot w-2 h-2 rounded-full transition-all duration-300 cursor-pointer" onclick="galeriaIr(2)" style="background:rgba(255,255,255,0.4)"></div>
+    <div class="galeria-dot w-2 h-2 rounded-full transition-all duration-300 cursor-pointer" onclick="galeriaIr(3)" style="background:rgba(255,255,255,0.4)"></div>
+    <div class="galeria-dot w-2 h-2 rounded-full transition-all duration-300 cursor-pointer" onclick="galeriaIr(4)" style="background:rgba(255,255,255,0.4)"></div>
+    <div class="galeria-dot w-2 h-2 rounded-full transition-all duration-300 cursor-pointer" onclick="galeriaIr(5)" style="background:rgba(255,255,255,0.4)"></div>
+  </div>
+
+  <div id="identidad-scroll" class="absolute inset-0 z-10 overflow-y-auto" style="scrollbar-width:thin;scrollbar-color:#16a34a transparent;">
+    <div class="max-w-5xl mx-auto px-6 py-10 pb-32">
+
+      <div class="flex items-start justify-between mb-8">
+        <div>
+          <h2 class="text-4xl md:text-6xl font-black text-white tracking-tight">
+            Identidad <span style="color:#86efac">Corporativa</span>
+          </h2>
+          <p class="text-white/90 text-base mt-3 max-w-md font-medium">Los símbolos que representan la esencia e historia de nuestra universidad.</p>
+        </div>
+        <img src="/assets/imagenes/aguachica-logo-sin-fondo.avif" alt="Logo UPC" loading="lazy"
+          class="hidden md:block h-20 w-auto object-contain flex-shrink-0 ml-8"
+          style="filter:drop-shadow(0 2px 12px rgba(0,0,0,0.5))">
+      </div>
+
+      <div class="space-y-3">
+
+        <div class="rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105" style="background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.2)">
+          <button onclick="toggleIdentidad('escudo')" class="w-full flex items-center justify-between px-6 py-4 text-left transition-all duration-300 hover:bg-white/10">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#007A33,#15803d)">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm">Escudo Institucional</h3>
+                <p class="text-white/60 text-xs">Símbolo oficial de la universidad</p>
+              </div>
+            </div>
+            <svg id="arrow-escudo" class="w-4 h-4 text-white/70 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="panel-escudo" class="hidden px-6 pb-4 overflow-y-auto" style="max-height:35vh;scrollbar-width:thin;scrollbar-color:#16a34a transparent;">
+            <div class="border-t pt-4" style="border-color:rgba(255,255,255,0.15)">
+              <img src="/assets/imagenes/escudo.avif" alt="Escudo UPC" class="mx-auto mb-4 w-auto h-24 rounded-xl" loading="lazy">
+              <p class="text-white/85 leading-relaxed text-sm">EL DIAMANTE representa a la Universidad que irradia luz permanente sobre el amplio campo del saber. EL COLOR AZUL representa la diafanidad del cielo, la verdad revelada y EL NEGRO representa la oscuridad, la ignorancia. Los LAURELES siempre han estado asociados con la cultura. Finalmente lo enmarcamos con el nombre UNIVERSIDAD POPULAR DEL CESAR y el lema EDUCACION Y FUTURO.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105" style="background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.2)">
+          <button onclick="toggleIdentidad('bandera')" class="w-full flex items-center justify-between px-6 py-4 text-left transition-all duration-300 hover:bg-white/10">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#007A33,#15803d)">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18M3 6l9-3 9 3v8l-9 3-9-3V6z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm">Bandera Institucional</h3>
+                <p class="text-white/60 text-xs">Emblema que representa nuestra comunidad</p>
+              </div>
+            </div>
+            <svg id="arrow-bandera" class="w-4 h-4 text-white/70 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="panel-bandera" class="hidden px-6 pb-4 overflow-y-auto" style="max-height:35vh;scrollbar-width:thin;scrollbar-color:#16a34a transparent;">
+            <div class="border-t pt-4" style="border-color:rgba(255,255,255,0.15)">
+              <img src="/assets/imagenes/bandera.avif" alt="Bandera UPC" class="mx-auto mb-4 w-auto h-24 rounded-xl" loading="lazy">
+              <p class="text-white/85 leading-relaxed text-sm">Tiene un diseño muy sobrio pero inconfundible. Representa el todo y la parte, la esperanza y la blancura impoluta y guarda uniformidad con el ESCUDO ya que se haya estampado en el centro.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105" style="background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.2)">
+          <button onclick="toggleIdentidad('himno')" class="w-full flex items-center justify-between px-6 py-4 text-left transition-all duration-300 hover:bg-white/10">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#007A33,#15803d)">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm">Himno Institucional</h3>
+                <p class="text-white/60 text-xs">Canto que une a nuestra comunidad universitaria</p>
+              </div>
+            </div>
+            <svg id="arrow-himno" class="w-4 h-4 text-white/70 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="panel-himno" class="hidden px-6 pb-4 overflow-y-auto" style="max-height:35vh;scrollbar-width:thin;scrollbar-color:#16a34a transparent;">
+            <div class="border-t pt-4" style="border-color:rgba(255,255,255,0.15)">
+              <div class="text-white/90 leading-relaxed text-sm text-center w-full" style="white-space:pre-line">Himno
+Del cesar, mi universidad
+Humanismo y libertad
+Brillas tanto como estrellas
+En luces de amor y paz
+Entre aires de enseñanza
+Los alumnos cantarán
+Los maestros sabiduría,
+A un mundo dejarán.
+
+Estrofas
+
+I
+
+En tu historia sencilla y vigorosa
+Una cauda de hombres te plasmó
+Y en la lucha de ideales civilista,
+Con denuedo y honores te eligió
+
+II
+
+Cerca a tus pies el cauce de un río
+Sigiloso pasa por ahí
+Y sus aguas jugando con las piedras
+Un canto de alegría nace aquí.
+
+III
+
+Un ambiente de armonía educativa
+Forjador de semblanza cultural
+Que unifica el alma cesarense
+Hacia metas de sentido universal
+
+Coro
+
+Del cesar, mi universidad
+Humanismo y libertad
+Brillas tanto como estrellas
+En luces de amor y paz
+Entre aires de enseñanza
+Los alumnos cantarán
+Los maestros sabiduría,
+A un mundo dejarán.
+
+IV
+
+El valor de democracia construida
+Reflejando el talento intelectual
+Caminos de esperanza colectiva
+Que humaniza una patria inmortal
+
+V
+
+Un faro iluminado de ciencia
+Entre pliegues de investigación
+El futuro es tu conciencia
+Construyendo nueva generación
+
+VI
+
+Tus claustros abiertos para todos
+Reciben al hombre como es:
+Etnias de todas las naciones
+Empuñando la bandera del saber
+
+VII
+
+La región se siente complacida
+De albergar en su seno educación
+Palabras que enseñan a dar vida
+Cual natura le da su bendición
+
+Autora música y letra:
+Martha Esther Guerra Muñoz
+Docente — Septiembre 13 de 1999</div>
+              <audio controls controlslist="nodownload" class="w-full rounded-2xl mt-4" style="accent-color:#22c55e" oncontextmenu="return false" preload="none">
+                <source src="/assets/audio/himnoupc.mp3" type="audio/mp3">
+              </audio>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105" style="background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.2)">
+          <button onclick="toggleIdentidad('logo')" class="w-full flex items-center justify-between px-6 py-4 text-left transition-all duration-300 hover:bg-white/10">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#007A33,#15803d)">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm">Logosímbolo</h3>
+                <p class="text-white/60 text-xs">Representación gráfica oficial de la UPC</p>
+              </div>
+            </div>
+            <svg id="arrow-logo" class="w-4 h-4 text-white/70 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="panel-logo" class="hidden px-6 pb-4 overflow-y-auto" style="max-height:35vh;scrollbar-width:thin;scrollbar-color:#16a34a transparent;">
+            <div class="border-t pt-4" style="border-color:rgba(255,255,255,0.15)">
+              <img src="/assets/imagenes/logo-upc.avif" alt="Logosímbolo UPC" class="mx-auto mb-4 w-auto h-24 rounded-xl" loading="lazy">
+              <p class="text-white/85 leading-relaxed text-sm">El logosímbolo de la Universidad Popular del Cesar es la marca gráfica que identifica a la institución en todos sus documentos, comunicaciones y espacios físicos.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105" style="background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.2)">
+          <button onclick="toggleIdentidad('colores')" class="w-full flex items-center justify-between px-6 py-4 text-left transition-all duration-300 hover:bg-white/10">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#007A33,#15803d)">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm">Colores Institucionales</h3>
+                <p class="text-white/60 text-xs">Paleta oficial de la universidad</p>
+              </div>
+            </div>
+            <svg id="arrow-colores" class="w-4 h-4 text-white/70 transition-transform duration-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div id="panel-colores" class="hidden px-6 pb-4 overflow-y-auto" style="max-height:35vh;scrollbar-width:thin;scrollbar-color:#16a34a transparent;">
+            <div class="border-t pt-4" style="border-color:rgba(255,255,255,0.15)">
+              <p class="text-white/80 text-xs mb-4">Paleta de colores oficial para todos los materiales de comunicación institucional.</p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#007A33"></div><span class="text-xs font-semibold text-white">Pantone 356</span><span class="text-xs text-white/50 font-mono">#007A33</span></div>
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#4B6B23"></div><span class="text-xs font-semibold text-white">Pantone 364</span><span class="text-xs text-white/50 font-mono">#4B6B23</span></div>
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#00A651"></div><span class="text-xs font-semibold text-white">Pantone 354</span><span class="text-xs text-white/50 font-mono">#00A651</span></div>
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#006B3F"></div><span class="text-xs font-semibold text-white">Pantone 348</span><span class="text-xs text-white/50 font-mono">#006B3F</span></div>
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#56A128"></div><span class="text-xs font-semibold text-white">Pantone 362</span><span class="text-xs text-white/50 font-mono">#56A128</span></div>
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#8DC63F"></div><span class="text-xs font-semibold text-white">Pantone 7488</span><span class="text-xs text-white/50 font-mono">#8DC63F</span></div>
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#FFF500;border:1px solid rgba(255,255,255,0.3)"></div><span class="text-xs font-semibold text-white">Amarillo</span><span class="text-xs text-white/50 font-mono">R:255 G:245</span></div>
+                <div class="flex flex-col items-center gap-1 group"><div class="w-full h-14 rounded-xl shadow-lg transition-all duration-300 group-hover:scale-105" style="background:#4D4D4D"></div><span class="text-xs font-semibold text-white">Negro 80%</span><span class="text-xs text-white/50 font-mono">#4D4D4D</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+<section id="video" class="relative overflow-hidden" style="height:100vh;min-height:600px;">
+  <div class="absolute inset-0 z-0">
+    <img src="/assets/imagenes/fondo-seccion-video.avif" alt="fondo video" class="w-full h-full object-cover">
+    <div class="absolute inset-0" style="background:linear-gradient(120deg,rgba(0,0,0,0.15) 0%,rgba(0,82,34,0.72) 45%,rgba(0,61,25,0.88) 100%)"></div>
+  </div>
+
+  <div class="relative z-10 h-full flex flex-col lg:flex-row items-center">
+    <div class="w-full lg:w-3/5 h-full flex items-center justify-center p-8 lg:p-12">
+      <div class="w-full rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+        style="box-shadow:0 32px 80px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.12)">
+        <video controls controlslist="nodownload" preload="none"
+          poster="/assets/imagenes/miniatura.avif"
+          class="w-full block" style="aspect-ratio:16/9;object-fit:cover"
+          oncontextmenu="return false">
+          <source src="/assets/videos/video-institucional.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <div class="hidden lg:block absolute left-[58%] top-0 h-full w-px"
+      style="background:linear-gradient(180deg,transparent,rgba(255,255,255,0.15) 30%,rgba(255,255,255,0.15) 70%,transparent)"></div>
+
+    <div class="w-full lg:w-2/5 flex flex-col justify-center px-8 lg:pr-16 lg:pl-8 pb-16 lg:pb-0">
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 tracking-tight">
+        Video <span style="color:#86efac">Institucional</span>
+      </h2>
+      <div class="w-16 h-1 rounded-full mb-6" style="background:linear-gradient(90deg,#22c55e,#86efac)"></div>
+      <p class="text-white/75 text-lg leading-relaxed max-w-sm">
+        Recorre algunos lugares de nuestra universidad y la esencia de nuestra comunidad académica.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,79 @@
+<section id="hero" class="hero-bg relative min-h-screen flex flex-col overflow-hidden">
+  <video autoplay muted loop playsinline preload="auto" controlslist="nodownload"
+    class="absolute inset-0 w-full h-full object-cover z-0" style="pointer-events:none">
+    <source src="/assets/videos/hero-video.mp4" type="video/mp4">
+  </video>
+  <div class="absolute inset-0" style="background:linear-gradient(170deg,rgba(0,30,15,.65) 0%,rgba(0,82,34,.55) 50%,rgba(21,128,61,.45) 60%);z-index:1"></div>
+  <div class="orb w-64 h-64 bg-upc-500/20 animate-float" style="top:10%;left:60%"></div>
+  <div class="orb w-48 h-48 bg-upc-400/15 animate-float-delayed" style="top:50%;left:10%"></div>
+  <div class="orb w-36 h-36 bg-white/10 animate-float-slow" style="top:30%;left:80%"></div>
+  <div class="hero-pattern-overlay"></div>
+
+  <div class="relative z-20 w-full px-6 md:px-12 py-6 flex items-center justify-between animate-fade-up">
+    <a href="https://aguachica.unicesar.edu.co/" target="_blank" class="flex items-center gap-3 group" title="Ir al sitio principal">
+      <img src="/assets/imagenes/loguito.webp" alt="Logo UPC" class="w-14 h-14 object-contain rounded-lg shadow-sm group-hover:scale-110 transition-transform duration-300">
+      <div class="hidden md:block">
+        <p class="text-white/90 text-sm font-semibold tracking-wide">Universidad Popular del Cesar</p>
+        <p class="text-upc-200 text-xs font-medium">Seccional Aguachica</p>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1 border border-white/15 cursor-default relative group transition-all duration-300 hover:scale-105">
+      <span class="text-white/80 text-xs font-medium" style="margin-top: 2px;">Trayectoria y Legado</span>
+      <div class="absolute top-full right-0 mt-3 w-80 p-5 rounded-2xl text-sm text-white/90 leading-relaxed bg-upc-900/70 backdrop-blur-xl border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+        Desde su consolidación en el sur del departamento, la Universidad Popular del Cesar (UPC) seccional Aguachica se ha erigido como el principal motor de transformación educativa e impacto social para la región y sus zonas de influencia. Nacida en la década de los noventa como respuesta a la necesidad histórica de democratizar el acceso a la educación superior en el territorio, la institución ha forjado un legado innegable de resiliencia, inclusión y progreso. A lo largo de su trayectoria, la UPC Aguachica no solo ha formado a miles de profesionales bajo un modelo humanista y de rigor científico, sino que se ha integrado profundamente con su entorno a través de proyectos de extensión e investigación orientados a resolver los retos económicos, ambientales y culturales de la comunidad.
+      </div>
+    </div>
+  </div>
+
+  <div class="relative z-10 flex-1 flex items-center px-6 md:px-12">
+    <div class="max-w-3xl">
+      <div class="animate-fade-up-delay">
+        <p class="text-upc-200 text-sm md:text-base font-semibold tracking-[.25em] uppercase mb-4">Seccional Aguachica</p>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[.95] mb-6">
+          <span id="typewriter-1"></span>
+          <span class="block mt-2 text-upc-200"><span id="typewriter-2"></span></span>
+        </h1>
+        <p class="text-upc-200 text-base md:text-lg font-light max-w-lg leading-relaxed mb-8">
+          Conoce la universidad y conecta con las personas que lideran y hacen posible nuestra misión educativa en la Seccional Aguachica.
+        </p>
+      </div>
+      <div class="animate-fade-up-delay-2">
+        <p class="text-upc-200 text-xs font-semibold tracking-widest uppercase mb-3">Accesos rápidos</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="https://vortal.unicesar.edu.co/unicesar/hermesoft/vortal/iniciarSesion.jsp" target="_blank" title="Ir al vortal"
+            class="group inline-flex items-center gap-2 bg-white text-upc-900 px-6 py-3.5 rounded-2xl font-semibold text-sm hover:bg-upc-50 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253"/></svg>
+            Vortal UPC
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </a>
+          <a href="https://aulaweb.unicesar.edu.co/" target="_blank" title="Ir al aula web"
+            class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-6 py-3.5 rounded-2xl font-semibold text-sm border border-white/20 hover:bg-white/20 transition-all duration-300">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+            Aula Web
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-2 left-6 z-30 md:bottom-4 md:left-12 animate-fade-up-delay-2">
+    <div class="inline-flex items-center gap-1.5 bg-upc-900/40 backdrop-blur-sm rounded-2xl px-2.5 py-1 border border-white/10">
+      <a href="https://github.com/devSebsco" target="_blank" rel="noopener noreferrer"
+      class="text-white/70 hover:text-white hover:scale-110 transition-all duration-300 flex-shrink-0"
+      title="GitHub: devSebsco">
+        <svg class="w-3 h-3 md:w-3.5 md:h-3.5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+      <span class="text-white text-[9px] md:text-[10px] font-medium tracking-wide select-none whitespace-nowrap">
+        © 2026 Sebastian Pinzón.
+      </span>
+    </div>
+  </div>
+
+  <svg class="hero-waves" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none">
+    <path d="M0 60L48 55C96 50 192 40 288 45C384 50 480 70 576 75C672 80 768 70 864 60C960 50 1056 40 1152 42C1248 44 1344 58 1392 65L1440 72V120H0V60Z" fill="#e8f5e9" fill-opacity="0.5"/>
+    <path d="M0 80L48 75C96 70 192 60 288 58C384 56 480 62 576 68C672 74 768 80 864 78C960 76 1056 66 1152 62C1248 58 1344 60 1392 62L1440 64V120H0V80Z" fill="#e8f5e9" fill-opacity="0.7"/>
+    <path d="M0 90L48 87C96 84 192 78 288 76C384 74 480 76 576 80C672 84 768 90 864 92C960 94 1056 92 1152 88C1248 84 1344 78 1392 75L1440 72V120H0V90Z" fill="#e8f5e9"/>
+  </svg>
+</section>
