@@ -12,10 +12,16 @@
     "astro": "astro"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^6.4.4"
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^6.4.4",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^3.4.19"
   }
 }
